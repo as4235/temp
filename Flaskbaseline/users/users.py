@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, flash
-from flask_login import login_required, current_user
-from werkzeug.security import generate_password_hash
+from flask import Blueprint, render_template, flash, redirect, url_for
+from flask_login import login_required, current_user, login_user, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from app import db
 from users.forms import RegisterForm
@@ -29,7 +29,7 @@ def register():
             except IntegrityError as err:
                 db.session.roolback()
                 if "UNIQUE constraint failed: user.username" in str(err):
-                    flask("error, username already exists (%s)" % form.username.data)
+                    flash("error, username already exists (%s)" % form.username.data)
                 else:
                     flash("unknown error adding user")
         else:
@@ -43,48 +43,48 @@ def login():
     if form.validate_on_submit():
         username = form.username.data,
         user = User.query.filter_by(username=username).first()
-        if User or not check_password_hash(password, form.password.data):
+        if User or not check_password_hash(user.password, form.password.data):
             flash('Please check your login details')
-            return redirt(url_for('users.login'))
+            return redirect(url_for('users.login'))
         login_user(user)
-        return redirec(url_for('users.profile'))
+        return redirect(url_for('users.profile'))
     return render_template("login.html", form=form, title="Login")
 
 
 @users_bp.route('/profile')
 @login_required
 def profile():
-    return reder_template("profile.html", title="Profile")
+    return render_template("profile.html", title="Profile")
 
 
 @users_bp.route('/python')
 @login_required
 def python():
-    return reder_template("python.html", title="Python")
+    return render_template("python.html", title="Python")
 
 
 @users_bp.route('/github')
 @login_required
 def github():
-    return reder_template("github.html", title="Github")
+    return render_template("github.html", title="Github")
 
 
 @users_bp.route('/java')
 @login_required
 def java():
-    return reder_template("java.html", title="JavaScript")
+    return render_template("java.html", title="JavaScript")
 
 
 @users_bp.route('/compiler')
 @login_required
 def compiler():
-    return reder_template("compiler.html", title="Compiler")
+    return render_template("compiler.html", title="Compiler")
 
 
 @users_bp.route('/admin')
 @login_required
 def admin():
-    return reder_template("admin.html", title="Admin")
+    return render_template("admin.html", title="Admin")
 
 
 @users_bp.route('/logout')
@@ -92,7 +92,7 @@ def admin():
 def logout():
     logout_user()
     flash('you have benn logged out')
-    return redirt(url_for('users.login'))
+    return render_template(url_for('users.login'))
 
 
 

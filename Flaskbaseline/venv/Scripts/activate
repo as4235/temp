@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\ajkum\Desktop\Flaskbaseline\venv"
+VIRTUAL_ENV="D:\NJIT\NJIT\Spring2020\IS601\repo\FBH\Flaskbaseline\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -1,4 +1,4 @@
-#!C:\Users\ajkum\Desktop\Flaskbaseline\venv\Scripts\python.exe
+#!D:\NJIT\NJIT\Spring2020\IS601\repo\FBH\Flaskbaseline\venv\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip3'
 __requires__ = 'pip==19.0.3'
 import re

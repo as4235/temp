@@ -28,11 +28,6 @@ def register_extensions(app):
     csrf.init_app(app)
     login_manager.init_app(app)
 
-    from users.models import User
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User.query.get(int(user_id))
 
 
 def register_blueprints(app):
@@ -52,7 +47,6 @@ def setup_database(app):
         from users.models import RolesUsers
         from users.models import Role
         db.create_all()
-        db.session.commit()
 
         # TODO setup admin
         role = Role()
